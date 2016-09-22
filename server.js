@@ -7,8 +7,8 @@ var http = require('http');
 var say = require('say'),
     escpos = require('escpos'),
     request = require('request');
-    // device  = new escpos.USB(),
-    // printer = new escpos.Printer(device);
+    device  = new escpos.USB(),
+    printer = new escpos.Printer(device);
 
 var server = http.createServer(function(request, response) {
   console.log('Received request from ' + request.url);
@@ -97,26 +97,23 @@ function tryParseJSON (jsonString){
     return false;
 };
 
-// get number from API
-function getNumber(category, callback) {
-
-
-}
-
 function printNumber(meta) {
 
   device.open(function() {
 
-    printer.font('a')
-      .align('ct')
-      .style('bu')
-      .size(1, 1)
-      .text('The quick brown fox jumps over the lazy dog')
-      .text('敏捷的棕色狐狸跳过懒狗')
-      .barcode('12345678', 'EAN8')
-      .qrimage('https://github.com/song940/node-escpos', function(err) {
-        this.cut();
-      });
+    printer
+    .font('b')
+    .align('ct')
+    .size(1, 1)
+    .text('Pejabat Pos Semenyih\n(SA-00103041A)\n')
+    .text('Current number: 1023\nYour number:\n\n1026\n')
+    .text('Your estimated time arrival: 12:50 AM\n')
+    .text('Scan this QR code to track your position.')
+    .qrimage('https://github.com/song940/node-escpos', {type: 'png', mode: 'dhdw'}, function(err){
+      this.text('or visit baeque.com and\nenter this code:\n\n107-131-511\n\nPowered by Baeque.\nGenerated on 12 August 2016 12:10 AM.\n\n')
+      this.cut();
+    });
+
   });
 }
 
