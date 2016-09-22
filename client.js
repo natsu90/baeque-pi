@@ -14,18 +14,16 @@ client.connect(PORT, HOST, function() {
 
 });
 
-client.on('data', function(data_old) {
+client.on('data', function(data) {
     
-    console.log('DATA: ' + data_old);
-    // Close the client socket completely
-
-    if (tryParseJSON(data_old)) {
-      console.log('got data!');
-      var data = JSON.parse(data_old);
-      // data is json
-      if (data.action == 'printNumber') {
-        console.log('printing number')
-        printNumber(data);
+    console.log('DATA: ' + data);
+    data = tryParseJSON(data);
+    if (data) {
+      switch(data.action) {
+        case 'printNumber':
+          printNumber(data); break;
+        case 'callNumber':
+          callNumber(data); break;
       }
     }
     //client.destroy();
@@ -74,6 +72,6 @@ function printNumber(meta) {
 function callNumber(meta) {
 
   console.log('calling number..');
-  var text = 'Number, 3, 0, 7, 2, counter, 5';
+  var text = '' + meta.number.toString().split('').join(', ') + ', counter, ' + meta.counter;
   say.speak(text, 'Agnes', 1.0);
 }
