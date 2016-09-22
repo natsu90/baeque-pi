@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "escpos": "^2.0.6",
+    "request": "^2.75.0",
+    "say": "^0.9.1",
+    "websocket": "^1.0.23"
+  }
+}
