@@ -14,14 +14,17 @@ client.connect(PORT, HOST, function() {
 
 });
 
-client.on('data', function(data) {
+client.on('data', function(data_old) {
     
-    console.log('DATA: ' + data);
+    console.log('DATA: ' + data_old);
     // Close the client socket completely
 
-    if (tryParseJSON(data)) {
+    if (tryParseJSON(data_old)) {
+      console.log('got data!');
+      var data = JSON.parse(data_old);
       // data is json
       if (data.action == 'printNumber') {
+        console.log('printing number')
         printNumber(data);
       }
     }
@@ -63,6 +66,7 @@ function printNumber(meta) {
       this.text('or visit baeque.com and\nenter this code:\n\n' + meta.queue_id + '\n\nPowered by Baeque.\nGenerated on ' + meta.gen_time + '.\n\n')
       this.cut();
     });
+
 
   });
 }
