@@ -72,6 +72,6 @@ function printNumber(meta) {
 function callNumber(meta) {
 
   console.log('calling number..');
-  var text = '' + meta.number.toString().split('').join('. ') + ', counter, ' + meta.counter;
+  var text = '' + meta.number.toString().split('').join(', , , ') + ', counter, ' + meta.counter;
   say.speak(text, 'Agnes', 1.0);
 }
